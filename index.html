@@ -18,6 +18,15 @@
           <button id="search-btn">Search</button>
         </div>
 
+        <!-- Add recent searches section between search-area and weather-display -->
+        <div id="recent-searches-section" class="recent-searches-section" style="display:none;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h4 style="margin:0;font-size:1rem;color:#666;">Recent Searches</h4>
+            <button id="clear-history-btn" class="clear-history-btn">Clear</button>
+          </div>
+          <div id="recent-searches-container"></div>
+        </div>
+
         <div id="weather-display" class="weather-display"></div>
       </main>
 
@@ -26,6 +35,7 @@
       </footer>
     </div>
 
+    <script src="config.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
