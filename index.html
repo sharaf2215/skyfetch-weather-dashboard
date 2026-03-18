@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Skyfetch Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Skyfetch Weather Dashboard</h1>
+      </header>
+
+      <main>
+        <div class="search-area">
+          <input id="city-input" type="text" placeholder="Enter city name" />
+          <button id="search-btn">Search</button>
+        </div>
+
+        <div id="weather-display" class="weather-display"></div>
+      </main>
+
+      <footer>
+        <p>Replace YOUR_API_KEY in <strong>app.js</strong> with your OpenWeatherMap API key.</p>
+      </footer>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
