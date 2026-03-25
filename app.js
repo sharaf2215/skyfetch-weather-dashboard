@@ -1,18 +1,11 @@
-﻿// API key: uses CONFIG.API_KEY if config.js is present, otherwise falls back to placeholder
-const API_KEY = (typeof CONFIG !== 'undefined' && CONFIG.API_KEY) ? CONFIG.API_KEY : 'YOUR_API_KEY_HERE';
+﻿// Your OpenWeatherMap API Key
+const API_KEY = 'YOUR_API_KEY_HERE';  // Replace with your actual API key
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
 // DOM references
 const searchBtn = document.getElementById('search-btn');
 const cityInput = document.getElementById('city-input');
 const weatherDisplay = document.getElementById('weather-display');
-const recentSearchesSection = document.getElementById('recent-searches-section');
-const recentSearchesContainer = document.getElementById('recent-searches-container');
-const clearHistoryBtn = document.getElementById('clear-history-btn');
-
-// Recent searches storage
-let recentSearches = [];
-const maxRecentSearches = 5;
 
 // Show loading UI
 function showLoading() {
@@ -36,66 +29,6 @@ function showError(message) {
     weatherDisplay.innerHTML = errorHTML;
 }
 
-// Recent searches: load from localStorage
-function loadRecentSearches() {
-    try {
-        const saved = localStorage.getItem('recentSearches');
-        if (saved) {
-            recentSearches = JSON.parse(saved);
-        }
-    } catch (e) {
-        recentSearches = [];
-    }
-    displayRecentSearches();
-}
-
-function saveRecentSearch(city) {
-    if (!city) return;
-    const cityName = city.charAt(0).toUpperCase() + city.slice(1).toLowerCase();
-    const index = recentSearches.indexOf(cityName);
-    if (index > -1) recentSearches.splice(index, 1);
-    recentSearches.unshift(cityName);
-    if (recentSearches.length > maxRecentSearches) recentSearches.pop();
-    localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
-    displayRecentSearches();
-}
-
-function displayRecentSearches() {
-    if (!recentSearchesContainer || !recentSearchesSection) return;
-    recentSearchesContainer.innerHTML = '';
-    if (!recentSearches || recentSearches.length === 0) {
-        recentSearchesSection.style.display = 'none';
-        return;
-    }
-    recentSearchesSection.style.display = 'block';
-    recentSearches.forEach(function(city) {
-        const btn = document.createElement('button');
-        btn.className = 'recent-search-btn';
-        btn.textContent = city;
-        btn.addEventListener('click', function() {
-            if (cityInput) cityInput.value = city;
-            getWeather(city);
-        });
-        recentSearchesContainer.appendChild(btn);
-    });
-}
-
-function clearHistory() {
-    if (!confirm('Clear all recent searches?')) return;
-    recentSearches = [];
-    localStorage.removeItem('recentSearches');
-    displayRecentSearches();
-}
-
-function loadLastCity() {
-    const lastCity = localStorage.getItem('lastCity');
-    if (lastCity) {
-        getWeather(lastCity);
-    } else {
-        showWelcome();
-    }
-}
-
 // Fetch weather using async/await
 async function getWeather(city) {
     showLoading();
@@ -110,13 +43,6 @@ async function getWeather(city) {
         const response = await axios.get(url);
         console.log('Weather Data:', response.data);
         displayWeather(response.data);
-        // Save this successful search and remember as last city
-        try {
-            saveRecentSearch(city);
-            localStorage.setItem('lastCity', city);
-        } catch (e) {
-            // ignore storage errors
-        }
     } catch (error) {
         console.error('Error:', error);
         if (error.response && error.response.status === 404) {
@@ -127,7 +53,7 @@ async function getWeather(city) {
     } finally {
         if (searchBtn) {
             searchBtn.disabled = false;
-            searchBtn.textContent = 'Search';
+            searchBtn.textContent = '🔍 Search';
         }
     }
 }
@@ -188,6 +114,12 @@ if (cityInput) {
     });
 }
 
+// Initial welcome message
+weatherDisplay.innerHTML = `
+    <div class="welcome-message">
+        <p>Welcome! Enter a city name to get started.</p>
+    </div>
+`;
 // Wire up clear history button
 if (clearHistoryBtn) {
     clearHistoryBtn.addEventListener('click', clearHistory);
