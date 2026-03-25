@@ -120,3 +120,12 @@ weatherDisplay.innerHTML = `
         <p>Welcome! Enter a city name to get started.</p>
     </div>
 `;
+// Wire up clear history button
+if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener('click', clearHistory);
+}
+
+// Initial setup: load recent searches and last city
+loadRecentSearches();
+loadLastCity();
+

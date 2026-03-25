@@ -28,3 +28,44 @@
     <script src="app.js"></script>
 </body>
 </html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Skyfetch Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Skyfetch Weather Dashboard</h1>
+      </header>
+
+      <main>
+        <div class="search-area">
+          <input id="city-input" type="text" placeholder="Enter city name" />
+          <button id="search-btn">Search</button>
+        </div>
+
+        <!-- Add recent searches section between search-area and weather-display -->
+        <div id="recent-searches-section" class="recent-searches-section" style="display:none;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h4 style="margin:0;font-size:1rem;color:#666;">Recent Searches</h4>
+            <button id="clear-history-btn" class="clear-history-btn">Clear</button>
+          </div>
+          <div id="recent-searches-container"></div>
+        </div>
+
+        <div id="weather-display" class="weather-display"></div>
+      </main>
+
+      <footer>
+        <p>Replace YOUR_API_KEY in <strong>app.js</strong> with your OpenWeatherMap API key.</p>
+      </footer>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
